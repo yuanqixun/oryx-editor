@@ -1,0 +1,267 @@
+{
+	"title":"Workflow Nets",
+	"namespace":"http://www.example.org/workflownets#",
+	"description":"Simple stencil set for Workflow Nets.",
+ 	"stencils" : [
+ 		{
+			"type": "node",
+			"id":"diagram",
+			"title":"Diagram",
+			"description":"",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    version=\"1.1\">    <g>     <rect oryx:anchors=\"top bottom left right\" x=\"1\" y=\"16\" width=\"80\"       height=\"80\" stroke=\"black\" fill=\"#D3DEFF\" stroke-width=\"2\"/>    </g> </svg> ",
+			"icon":"diagram.png",
+			"mayBeRoot": true,
+			"roles": [
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":""
+				}
+			]
+		},
+ 		{
+			"type": "node",
+			"id":"activity",
+			"title":"Activity",
+			"groups":[],
+			"description":"An atomic activity.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    version=\"1.1\">    <oryx:magnets>     <oryx:magnet oryx:cx=\"41\" oryx:cy=\"56\" />     <oryx:magnet oryx:cx=\"2\" oryx:cy=\"56\"/>      <oryx:magnet oryx:cx=\"80\" oryx:cy=\"56\"/>    </oryx:magnets>    <g oryx:minimumSize=\"50 50\" oryx:maximumSize=\"200 200\">     <rect id=\"color\" oryx:anchors=\"top bottom left right\" x=\"1\" y=\"16\"       width=\"80\" height=\"80\" stroke=\"black\" fill=\"#D3DEFF\" stroke-width=\"2\"/>    <path id=\"external\" oryx:anchors=\"top right\" fill=\"#D3DEFF\" stroke=\"black\"      d=\"M61 1 h20 v12 h-20 v-12 m20 0 l-10 6 l-10 -6\" />  <path id=\"user\" oryx:anchors=\"top right\" fill=\"#D3DEFF\" stroke=\"black\"    d=\"M71 1 v6 h-2 l5 6 l5 -6 h-2 v-6 h-6\" />  <g id=\"time\">   <circle oryx:anchors=\"top right\" fill=\"#D3DEFF\" stroke=\"black\"     cx=\"75\" cy=\"7\" r=\"6\" />   <path oryx:anchors=\"top right\" fill=\"none\" stroke=\"black\"     d=\"M75 1 v2 M81 7 h-2 M75 13 v-2 M69 7 h2 M75 7 l3 -2 M75 7 l-5 -3\" />  </g>  <path id=\"explicitorsplit\" oryx:resize=\"horizontal vertical\"    stroke-linejoin=\"bevel\" oryx:anchors=\"top bottom right\" fill=\"none\"    stroke=\"black\" d=\"M66 16 v80 l15 -40 z\" />  <path id=\"andsplit\" oryx:resize=\"horizontal vertical\"    stroke-linejoin=\"bevel\" oryx:anchors=\"top bottom right\" fill=\"none\"    stroke=\"black\" d=\"M81 16 l-15 40 l15 40 m-15 0 v-80\" />  <path id=\"andorsplit\" oryx:resize=\"horizontal vertical\"    stroke-linejoin=\"bevel\" oryx:anchors=\"top bottom right\" fill=\"none\"    stroke=\"black\" d=\"M66 16 v80 m0 -26.666 h15 m-15 -26.666 h15\" />  <path id=\"explicitorjoin\" oryx:resize=\"horizontal vertical\"    stroke-linejoin=\"bevel\" oryx:anchors=\"top bottom left\" fill=\"none\"    stroke=\"black\" d=\"M16 16 l-15 40 l15 40 z\" />  <path id=\"andjoin\" oryx:resize=\"horizontal vertical\" stroke-linejoin=\"bevel\"   oryx:anchors=\"top bottom left\" fill=\"none\" stroke=\"black\"    d=\"M1 16 l15 40 l-15 40 M16 16 v80\" />  <text id=\"caption\" x=\"41\" y=\"56\" oryx:align=\"middle center\"></text>    </g> </svg> ",
+			"icon":"activity.png",
+			/*"serialize":function(shape, data) {
+				var numOfOutgoings = shape.getOutgoingShapes().length;
+				data.push({
+						  name:"numOfOutgoings",
+						  prefix:"oryx",
+						  value:numOfOutgoings,
+						  type:"literal"
+						  });
+				return data;
+			},*/
+			"serialize":{"type":"Workflownets.Activity.serialize"},
+			"roles": ["activitySource", "activityTarget"],
+			"properties": [
+				{
+					"id":"caption",
+					"type":"String",
+					"title":"Caption",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"caption",
+					"wrapLines":true
+				},
+				{
+					"id":"trigger",
+					"type":"Choice",
+					"title":"Trigger",
+					"value":"Automatic",
+					"optional":false,
+					"items": [
+						{
+							"title":"Automatic",
+							"value":"Automatic",
+							"refToView":"automatic"
+						},
+						{
+							"title":"User",
+							"value":"User",
+							"refToView":"user"
+						},
+						{
+							"title":"External",
+							"value":"External",
+							"refToView":"external"
+						},
+						{
+							"title":"Time",
+							"value":"Time",
+							"refToView":"time"
+						}
+					]
+				},
+				{
+					"id":"split",
+					"type":"Choice",
+					"title":"Split Behavior",
+					"value":"Or",
+					"optional":"false",
+					"items": [
+						{
+							"title":"Or",
+							"value":"Or",
+							"refToView":"orsplit"
+						},
+						{
+							"title":"Explicit Or",
+							"value":"Explicit Or",
+							"refToView":"explicitorsplit"
+						},
+						{
+							"title":"And",
+							"value":"And",
+							"refToView":"andsplit"
+						},
+						{
+							"title":"And / Or",
+							"value":"And / Or",
+							"refToView":"andorsplit"
+						}
+					]
+				},
+				{
+					"id":"join",
+					"type":"Choice",
+					"title":"Join Behavior",
+					"value":"Or",
+					"optional":"false",
+					"items": [
+						{
+							"id":"c1",
+							"title":"Or",
+							"value":"Or",
+							"refToView":"orjoin"
+						},
+						{
+							"id":"c2",
+							"title":"Explicit Or",
+							"value":"Explicit Or",
+							"refToView":"explicitorjoin"
+						},
+						{
+							"id":"c3",
+							"title":"And",
+							"value":"And",
+							"refToView":"andjoin"
+						}
+					]
+				},
+				{
+					"id":"color",
+					"type":"Color",
+					"title":"Color",
+					"value":"#D3DEFF",
+					"refToView":"color",
+					"optional":false,
+					"fill":true
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"condition",
+			"title":"Condition",
+			"groups":[],
+			"description":"A Workflow net condition.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"40\"    height=\"40\"    version=\"1.1\">   <g>     <circle id=\"color\" cx=\"16\" cy=\"16\" r=\"15\" stroke=\"black\" fill=\"#D3DEFF\"       stroke-width=\"2\"/>   </g> </svg> ",
+			"icon":"condition.png",
+			"roles": ["conditionSource", "conditionTarget"],
+			"properties": [
+				{
+					"id":"color",
+					"type":"Color",
+					"title":"Color",
+					"value":"#D3DEFF",
+					"refToView":"color",
+					"optional":false,
+					"fill":true
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"inputcondition",
+			"title":"Input Condition",
+			"groups":[],
+			"description":"A Workflow net input condition.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"40\"    height=\"40\"    version=\"1.1\">   <g>     <circle id=\"color\" cx=\"16\" cy=\"16\" r=\"15\" stroke=\"black\" fill=\"#D3DEFF\"       stroke-width=\"2\"/>     <path d=\"M16 13 l0 2 m0 1 l0 5\" stroke=\"black\"/>   </g> </svg> ",
+			"icon":"inputcondition.png",
+			"roles": ["conditionSource"],
+			"properties": [
+				{
+					"id":"color",
+					"type":"Color",
+					"title":"Color",
+					"value":"#D3DEFF",
+					"refToView":"color",
+					"optional":false,
+					"fill":true
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"outputcondition",
+			"title":"Output Condition",
+			"groups":[],
+			"description":"A Workflow net output condition.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"40\"    height=\"40\"    version=\"1.1\">   <g>     <circle id=\"color\" cx=\"16\" cy=\"16\" r=\"15\" stroke=\"black\" fill=\"#D3DEFF\"       stroke-width=\"2\"/>     <ellipse cx=\"16\" cy=\"16\" rx=\"3\" ry=\"4\" fill=\"none\" stroke=\"black\" />   </g> </svg> ",
+			"icon":"outputcondition.png",
+			"roles": ["conditionTarget"],
+			"properties": [
+				{
+					"id":"color",
+					"type":"Color",
+					"title":"Color",
+					"value":"#D3DEFF",
+					"refToView":"color",
+					"optional":false,
+					"fill":true
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"controlflow",
+			"title":"Control Flow",
+			"description":"",
+			"groups":[],
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"500\"    height=\"400\"    version=\"1.0\">   <defs>  <marker id=\"arrowEnd\" refX=\"10\" refY=\"5\" markerUnits=\"userSpaceOnUse\"    markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\">   <path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"black\" stroke=\"black\"/>  </marker>   </defs>   <g>     <path d=\"M50 50 L100 50\" stroke=\"black\" fill=\"none\" stroke-width=\"2\"       marker-end=\"url(#arrowEnd)\"/>   </g> </svg> ",
+			"icon":"controlflow.png",
+			"roles": [],
+			"properties": []
+		}
+	],
+	"rules": {
+		"connectionRules": [
+			{
+				"role":"controlflow",
+				"connects": [
+					{
+						"from":"activitySource",
+						"to":"conditionTarget"
+					},
+					{
+						"from":"conditionSource",
+						"to":"activityTarget"
+					}
+				]
+			}
+		],
+		"cardinalityRules": [
+			{
+				"role":"inputcondition",
+				maximumOccurrence:1
+			},
+			{
+				"role":"outputcondition",
+				maximumOccurrence:1
+			},
+		],
+		"containmentRules": [
+			{
+				"role":"diagram",
+				"contains":[
+					"activity", 
+					"condition", 
+					"inputcondition", 
+					"outputcondition"
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,672 @@
+/**
+ * Copyright (c) 2008-2009
+ * Falko Menge, Martin Czuchra
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ **/
+
+//TODO: better svg for modifying access (I tried with 'view/edge.modifyingaccess.2.svg' and 'view/edge.modifyingaccess.3.edit.svg' but they don't work in Oryx)
+//TODO: L and U agents and storages
+//TODO: bing protocol boundary to background
+//TODO: two and three dot shapes
+//TODO: enumeration of nodes (see Figure 27 of the FMC Visualization Guidelines at http://www.fmc-modeling.org/visualization_guidelines)
+//TODO: brace
+//TODO: attach request symbols to channels
+//TODO: rounded edges (like in the universal communication channel in Viso stencils)
+//TODO: nicer arrows for request symbols
+//TODO: prefix for properties (raziel, oryx or fmc)?
+
+{
+	"title":"FMC Block Diagram",
+	"namespace":"http://www.fmc-modeling.org/stencilsets/fmcblockdiagram#",
+	"description":"FMC Block Diagrams show compositional structures as a composition of collaborating system components. (For further information see www.fmc-modeling.org)",
+ 	"stencils" : [
+  		{
+			"type": "node",
+			"id":"Diagram",
+			"title":"Diagram",
+			"groups":[],
+			"description":"A Diagram",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:svg=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    xmlns:xlink=\"http://www.w3.org/1999/xlink\"    width=\"800\"    height=\"600\"    version=\"1.0\">   <defs></defs>   <g pointer-events=\"fill\" >     <polygon stroke=\"black\" fill=\"black\" stroke-width=\"1\" points=\"0,0 0,590 9,599 799,599 799,9 790,0\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" />     <rect id=\"diagramcanvas\" oryx:resize=\"vertical horizontal\" x=\"0\" y=\"0\" width=\"790\" height=\"590\" stroke=\"black\" stroke-width=\"2\" fill=\"white\" />      <text font-size=\"22\" id=\"diagramtext\" x=\"400\" y=\"25\" oryx:align=\"top center\" stroke=\"black\"></text>   </g> </svg> ",
+			"icon":"node.diagram.png",
+			"roles": [
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+				}
+			]
+		},
+ 		{
+			"type": "node",
+			"id":"HumanAgent",
+			"title":"Human Agent",
+			"groups":[],
+			"description":"A human agent is an active system component exactly like an agent but the only difference that it depicts a human.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    version=\"1.0\">   <g      oryx:minimumSize=\"22 34\"      id=\"g3217\">     <rect        x=\"0\"        y=\"0\"        width=\"22.6772\"        height=\"34.015701\"        id=\"humanagent\"        style=\"stroke:#000000\"        stroke-width=\"1.9\"        oryx:resize=\"horizontal vertical\"        oryx:anchor=\"top bottom left right\" />       <path          oryx:align=\"middle center\"          style=\"fill:none;stroke:#000000;stroke-linecap:round\"          d=\"M 8.3809252,8.7705188 C 8.4270832,7.1535364 9.6693032,5.8682314 11.185925,5.8682314 C 12.702546,5.8682314 13.944767,7.1535364 13.990925,8.7705188 C 13.944767,10.387501 12.702546,11.672806 11.185925,11.672806 C 9.6693032,11.672806 8.4270832,10.387501 8.3809252,8.7705188 L 8.3809252,8.7705188 z M 5.3386002,28.14747 L 11.2761,21.20997 L 17.2761,28.14747 L 17.2761,28.14747 M 11.2136,21.33497 L 11.2136,11.77247 M 5.0886002,12.33497 L 11.2136,15.83497 L 17.5886,12.08497\"          id=\"human\" />       <text font-size=\"12\" id=\"text\" x=\"11.34\" y=\"19\" oryx:align=\"top center\" stroke=\"black\"></text>   </g> </svg> ",
+			"icon":"node.human-agent.png",
+			"roles": [
+				"from_active",
+				"to_active",
+				"diagramcontent",
+				"agentcontent"
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+                },
+                {
+                    "id":"URL",
+                    "type":"Url",
+                    "title":"URL",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true
+				},
+                {
+                    "id":"color",
+                    "type":"Color",
+                    "title":"Color",
+                    "value": "#ffffff",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"humanagent",
+                    "fill":true,
+                    "stroke":false
+				}
+			]
+		},
+ 		{
+			"type": "node",
+			"id":"Agent",
+			"title":"Agent",
+			"groups":[],
+			"description":"Active system component: Serves a well-defined purpose and therefore has access to adjacent passive system components and only those may be connected to it.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"80\"    height=\"45\"    version=\"1.0\">   <oryx:magnets>     <oryx:magnet oryx:cx=\"0\" oryx:cy=\"22.5\" oryx:anchors=\"left\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"45\" oryx:anchors=\"bottom\" />     <oryx:magnet oryx:cx=\"80\" oryx:cy=\"22.5\" oryx:anchors=\"right\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"0\" oryx:anchors=\"top\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"22.5\" oryx:anchors=\"center\" oryx:default=\"yes\" />   </oryx:magnets>   <g pointer-events=\"fill\" oryx:minimumSize=\"40 15\" >     <rect id=\"agent\" oryx:resize=\"vertical horizontal\" x=\"0\" y=\"0\" width=\"80\" height=\"45\" stroke=\"black\" stroke-width=\"1.9\" fill=\"white\" />       <text font-size=\"12\" id=\"text\" x=\"40\" y=\"21.75\" oryx:align=\"middle center\" stroke=\"black\">Agent</text>   </g> </svg> ",
+			"icon":"node.agent.png",
+			"roles": [
+				"from_active",
+				"to_active",
+				"agentcontent",
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+                },
+                {
+                    "id":"URL",
+                    "type":"Url",
+                    "title":"URL",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true
+				},
+                {
+                    "id":"color",
+                    "type":"Color",
+                    "title":"Color",
+                    "value": "#ffffff",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"agent",
+                    "fill":true,
+                    "stroke":false
+                }
+			]
+		},
+ 		{
+			"type": "node",
+			"id":"Storage",
+			"title":"Storage",
+			"groups":[],
+			"description":"A storage is used by agents to store data.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"80.770103\"    height=\"46.754303\"    version=\"1.0\">   <oryx:magnets>     <oryx:magnet oryx:cx=\"0\" oryx:cy=\"22.5\" oryx:anchors=\"left\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"45\" oryx:anchors=\"bottom\" />     <oryx:magnet oryx:cx=\"80\" oryx:cy=\"22.5\" oryx:anchors=\"right\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"0\" oryx:anchors=\"top\" />     <oryx:magnet oryx:cx=\"40\" oryx:cy=\"22.5\" oryx:anchors=\"center\" oryx:default=\"yes\" />   </oryx:magnets>   <g>     <rect        x=\"0\"        y=\"0\"        width=\"80\"        height=\"45\"        rx=\"22.5\"        ry=\"22.5\"        style=\"stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"        fill=\"white\"        id=\"storage\"        oryx:resize=\"vertical horizontal\" />       <text font-size=\"12\" id=\"text\" x=\"40\" y=\"22\" oryx:align=\"middle center\" stroke=\"black\">Storage</text>   </g> </svg> ",
+			"icon":"node.storage.png",
+			"roles": [
+				"from_passive",
+				"to_passive",
+				"from_storage",
+				"to_storage",
+				"storagecontent",
+				"agentcontent",
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+                },
+                {
+                    "id":"URL",
+                    "type":"Url",
+                    "title":"URL",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true
+				},
+                {
+                    "id":"color",
+                    "type":"Color",
+                    "title":"Color",
+                    "value": "#ffffff",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"storage",
+                    "fill":true,
+                    "stroke":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"Channel",
+			"title":"Channel",
+			"groups":[],
+			"description":"A channel is used for communication purposes between at least two active system components.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"16\"    height=\"16\"    version=\"1.1\">   <g pointer-events=\"fill\" oryx:minimumSize=\"16 16\">     <circle id=\"channel\" oryx:resize=\"\" cx=\"8\" cy=\"8\" r=\"8\" stroke=\"black\" fill=\"white\" stroke-width=\"1.9\"/>   </g> </svg> ",
+			"icon":"node.channel.png",
+			"intersectionType":"ellipse",			
+			"roles": [
+				"from_passive",
+				"to_passive",
+				"from_channel",
+				"to_channel",
+				"agentcontent",
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				},
+                {
+                    "id":"color",
+                    "type":"Color",
+                    "title":"Color",
+                    "value": "#ffffff",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"channel",
+                    "fill":true,
+                    "stroke":false
+				}
+			]
+		},
+ 		{
+			"type": "node",
+			"id":"StructureVariance",
+			"title":"Structure Variance",
+			"groups":[],
+			"description":"Structure variance deals with the creation and disappearance of system components. An agent (A1) changes the system structure (creation/deletion of A2) at a location depicted as dotted storage. System structure change is depicted as modifying access. After creation agent A1 can communicate with agent A2 or vice versa.",
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:svg=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    xmlns:xlink=\"http://www.w3.org/1999/xlink\"    width=\"90\"    height=\"60\"    version=\"1.0\">   <oryx:magnets>     <oryx:magnet oryx:cx=\"0\" oryx:cy=\"30\" oryx:anchors=\"left\" />     <oryx:magnet oryx:cx=\"45\" oryx:cy=\"60\" oryx:anchors=\"bottom\" />     <oryx:magnet oryx:cx=\"90\" oryx:cy=\"30\" oryx:anchors=\"right\" />     <oryx:magnet oryx:cx=\"45\" oryx:cy=\"0\" oryx:anchors=\"top\" />     <oryx:magnet oryx:cx=\"45\" oryx:cy=\"30\" oryx:anchors=\"center\" oryx:default=\"yes\" />   </oryx:magnets>   <g>     <rect        x=\"0\"        y=\"0\"        width=\"90\"        height=\"60\"        rx=\"30\"        ry=\"30\"        style=\"stroke:#000000;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round\"        id=\"structurevariance\"        oryx:resize=\"vertical horizontal\"        stroke-dasharray=\"8, 6\" />     <text font-size=\"12\" id=\"text\" x=\"40\" y=\"22\" oryx:align=\"middle center\" stroke=\"black\"></text>   </g> </svg> ",
+			"icon":"node.structurevariance.png",
+			"roles": [
+				"from_storage",
+				"to_storage",
+				"agentcontent",
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"title",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+				},
+                {
+                    "id":"color",
+                    "type":"Color",
+                    "title":"Color",
+                    "value": "#e8e8e8",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"structurevariance",
+                    "fill":true,
+                    "stroke":false
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"BidirectionalConnection",
+			"title":"Bidirectional Connection",
+			"description":"Represents a connection between an active and a passive component of the system. The active component has read and write access to the passive component.",
+			"groups":[],
+			"view":"<svg  xmlns=\"http://www.w3.org/2000/svg\"  xmlns:oryx=\"http://www.b3mn.org/oryx\"  version=\"1.0\"  oryx:edge=\"edge\" >  <g>      <path id=\"edge\" d=\"M10 50 L210 50\" stroke=\"black\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"butt\" stroke-linejoin=\"round\" />  </g> </svg> ",
+			"icon":"edge.bidirectionalconnection.png",
+			"roles": [
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"Label",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"WriteAccess",
+			"title":"Write Access",
+			"description":"Directed edges represent a read or write access an active system component has to a passive system component.",
+			"groups":[],
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <svg  xmlns=\"http://www.w3.org/2000/svg\"  xmlns:oryx=\"http://www.b3mn.org/oryx\"     width=\"104\"     height=\"10\"  version=\"1.0\"  oryx:edge=\"edge\" >  <defs>       <marker         orient=\"auto\"         refY=\"0.0\"         refX=\"0.0\"         id=\"Arrow2Mstart\"         style=\"overflow:visible\">         <path           style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"           d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"           transform=\"scale(0.5,0.6) scale(1.3) translate(0,0) rotate(180)\" />       </marker>  </defs>  <g>      <path id=\"edge\" d=\"M 3 5 L 103 5\" stroke=\"black\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"butt\" stroke-linejoin=\"round\" marker-end=\"url(#Arrow2Mstart)\" />  </g> </svg> ",
+			"icon":"edge.writeaccess.png",
+			"roles": [
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"Label",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"ReadAccess",
+			"title":"Read Access",
+			"description":"Directed edges represent a read or write access an active system component has to a passive system component.",
+			"groups":[],
+			"view":"<?xml version=\"1.0\" encoding=\"UTF-8\" ?> <svg  xmlns=\"http://www.w3.org/2000/svg\"  xmlns:oryx=\"http://www.b3mn.org/oryx\"     width=\"104\"     height=\"10\"  version=\"1.0\"  oryx:edge=\"edge\" >  <defs>       <marker         orient=\"auto\"         refY=\"0.0\"         refX=\"0.0\"         id=\"Arrow2Mstart\"         style=\"overflow:visible\">         <path           id=\"path5227\"           style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"           d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"           transform=\"scale(0.5,0.6) scale(1.3) translate(0,0)\" />       </marker>  </defs>  <g>      <path id=\"edge\" d=\"M 3 5 L 103 5\" stroke=\"black\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"butt\" stroke-linejoin=\"round\" marker-start=\"url(#Arrow2Mstart)\" />  </g> </svg> ",
+			"icon":"edge.readaccess.png",
+			"roles": [
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"Label",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"ModifyingAccess",
+			"title":"Modifying Access",
+			"description":"The Modifying Access is used to indicate that an agent is able to read from a storage and write to it. This is called modifying access. Usually the agent will not modify the entire information, but only a fraction.",
+			"groups":[],
+			"view":"<svg  xmlns=\"http://www.w3.org/2000/svg\"  xmlns:oryx=\"http://www.b3mn.org/oryx\"  version=\"1.0\"  oryx:edge=\"edge\" >  <defs> <!--       <marker id=\"start\" refX=\"1\" refY=\"4\" markerUnits=\"userSpaceOnUse\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\">         <path d=\"M 0 4 L 10 0 L 10 8 L 0 4\" fill=\"black\" stroke=\"black\" />       </marker>       <marker id=\"end\" refX=\"9\" refY=\"4\" markerUnits=\"userSpaceOnUse\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\">         <path d=\"M 0 0 L 10 4 L 0 8 L 0 0\" fill=\"black\" stroke=\"black\" />       </marker> -->       <marker         orient=\"auto\"         refY=\"0.0\"         refX=\"0.0\"         id=\"Arrow2Mend\"         style=\"overflow:visible\">         <path           style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"           d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"           transform=\"scale(0.5,0.6) scale(1.3) translate(0,0) rotate(180)\" />       </marker>       <marker         orient=\"auto\"         refY=\"0.0\"         refX=\"0.0\"         id=\"Arrow2Mstart\"         style=\"overflow:visible\">         <path           id=\"path5227\"           style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"           d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"           transform=\"scale(0.5,0.6) scale(1.3) translate(0,0)\" />       </marker>  </defs>  <g>      <path id=\"edge\" d=\"M10 50 L210 50\" stroke=\"black\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" marker-start=\"url(#Arrow2Mstart)\" marker-end=\"url(#Arrow2Mend)\" />  </g> </svg> ",
+			"icon":"edge.modifyingaccess.png",
+			"roles": [
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"Label",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"ProtocolBoundary",
+			"title":"Protocol Boundary",
+			"description":"A protocol boundary is used to indicate that a certain protocol is used for communication between agents.",
+            "groups":[],
+            "groups_de":[],
+			"view":"<svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    version=\"1.0\"    oryx:edge=\"edge\" >   <g>     <path id=\"edge\" d=\"M 0 0 L 0 200\"        stroke=\"#969696\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"        stroke-dasharray=\"20, 10\" />   </g> </svg> ",
+			"icon":"edge.protocolboundary.png",
+			"roles": [
+				"diagramcontent"
+			],
+			"properties": [
+				{
+					"id":"Label",
+					"type":"String",
+					"title":"Title",
+					"value":"",
+					"description":"",
+					"tooltip":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":""
+				}
+			]
+		},
+        {
+            "type": "node",
+            "id":"RequestSymbolL2R",
+            "title":"Request Symbol (l2r)",
+            "description":"The agent on the left can request information from agent on the right which in turn responds (e.g. function calls or http request/responses). Because it is very common, this symbol is an abbreviation of the request/response channel.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"23\"    height=\"12\"    version=\"1.0\">   <g pointer-events=\"fill\" >     <rect x=\"0\" y=\"0\" width=\"23\" height=\"12\" stroke=\"none\" fill=\"none\" />     <text font-size=\"10\" id=\"text\" x=\"2\" y=\"10\" stroke=\"black\">R</text>     <path d=\"M 12.5 1 L 18.75 6 L 12.5 11 L 12.5 1\" fill=\"black\" stroke=\"none\" /> <!--     <path       style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"       d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"       transform=\"scale(1,1.4) translate(20,4.4) rotate(180)\" /> -->   </g> </svg> ",
+            "icon":"node.requestsymbol-l2r.png",
+            "roles": [
+                "diagramcontent",
+                "agentcontent"
+            ],
+            "properties": []
+        },
+        {
+            "type": "node",
+            "id":"RequestSymbolT2B",
+            "title":"Request Symbol (t2b)",
+            "description":"The agent above can request information from agent below which in turn responds (e.g. function calls or http request/responses). Because it is very common, this symbol is an abbreviation of the request/response channel.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"11\"    height=\"21\"    version=\"1.0\">   <g pointer-events=\"fill\" >     <rect x=\"0\" y=\"0\" width=\"11\" height=\"21\" stroke=\"none\" fill=\"none\" />     <text font-size=\"10\" id=\"text\" x=\"1\" y=\"10\" stroke=\"black\">R</text>     <path d=\"M 12.5 1 L 18.75 6 L 12.5 11 L 12.5 1\" fill=\"black\" stroke=\"none\"       transform=\"translate(11.5,1) rotate(90)\"/> <!--     <path       style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"       d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"       transform=\"scale(1,1.4) translate(20,4.4) rotate(180)\" /> -->   </g> </svg> ",
+            "icon":"node.requestsymbol-t2b.png",
+            "roles": [
+                "diagramcontent",
+                "agentcontent"
+            ],
+            "properties": []
+        },
+        {
+            "type": "node",
+            "id":"RequestSymbolR2L",
+            "title":"Request Symbol (r2l)",
+            "description":"The agent on the right can request information from agent on the left which in turn responds (e.g. function calls or http request/responses). Because it is very common, this symbol is an abbreviation of the request/response channel.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"23\"    height=\"12\"    version=\"1.0\">   <g pointer-events=\"fill\" >     <rect x=\"0\" y=\"0\" width=\"23\" height=\"12\" stroke=\"none\" fill=\"none\" />     <text font-size=\"10\" id=\"text\" x=\"11\" y=\"10\" stroke=\"black\">R</text>     <path d=\"M 12.5 1 L 18.75 6 L 12.5 11 L 12.5 1\" fill=\"black\" stroke=\"none\"       transform=\"translate(21.5,12.5) rotate(180)\" /> <!--     <path       style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"       d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"       transform=\"scale(1,1.4) translate(20,4.4) rotate(180)\" /> -->   </g> </svg> ",
+            "icon":"node.requestsymbol-r2l.png",
+            "roles": [
+                "diagramcontent",
+                "agentcontent"
+            ],
+            "properties": []
+        },
+        {
+            "type": "node",
+            "id":"RequestSymbolB2T",
+            "title":"Request Symbol (b2t)",
+            "description":"The agent below can request information from agent above which in turn responds (e.g. function calls or http request/responses). Because it is very common, this symbol is an abbreviation of the request/response channel.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"11\"    height=\"21\"    version=\"1.0\">   <g pointer-events=\"fill\" >     <rect x=\"0\" y=\"0\" width=\"11\" height=\"21\" stroke=\"none\" fill=\"none\" />     <text font-size=\"10\" id=\"text\" x=\"1\" y=\"18\" stroke=\"black\">R</text>     <path d=\"M 12.5 1 L 18.75 6 L 12.5 11 L 12.5 1\" fill=\"black\" stroke=\"none\"       transform=\"translate(-0.5,21) rotate(270)\"/> <!--     <path       style=\"font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round\"       d=\"M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z \"       transform=\"scale(1,1.4) translate(20,4.4) rotate(180)\" /> -->   </g> </svg> ",
+            "icon":"node.requestsymbol-b2t.png",
+            "roles": [
+                "diagramcontent",
+                "agentcontent"
+            ],
+            "properties": []
+        },
+        {
+            "type": "node",
+            "id":"TextLabel",
+            "title":"Text Label",
+            "description":"A label that can be freely positioned whithin a storage or agent.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    width=\"24\"    height=\"12\"    version=\"1.0\">   <g pointer-events=\"fill\" >     <rect x=\"0\" y=\"0\" width=\"24\" height=\"12\" stroke=\"none\" fill=\"none\" />     <text font-size=\"11\" id=\"text\" x=\"1\" y=\"10\" stroke=\"black\">Text</text>   </g> </svg> ",
+            "icon":"node.textlabel.png",
+            "roles": [
+                "diagramcontent",
+                "agentcontent",
+                "storagecontent"
+            ],
+            "properties": [
+                {
+                    "id":"Label",
+                    "type":"String",
+                    "title":"Text",
+                    "value":"Text",
+                    "description":"",
+                    "tooltip":"",
+                    "readonly":false,
+                    "optional":false,
+                    "refToView":"text",
+                    "length":""
+                }
+            ]
+        },
+        {
+            "type": "node",
+            "id":"TextAnnotation",
+            "title":"Text Annotation",
+            "title_de":"Text-Anmerkung",
+            "description":"Any object can be associated with a Text Annotation to provide additional documentation.",
+            "description_de":"Jedes Objekt kann durch eine Text-Anmerkung kommentiert werden.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg    xmlns=\"http://www.w3.org/2000/svg\"    xmlns:svg=\"http://www.w3.org/2000/svg\"    xmlns:oryx=\"http://www.b3mn.org/oryx\"    xmlns:xlink=\"http://www.w3.org/1999/xlink\"    width=\"102\"    height=\"52\"    version=\"1.0\">   <defs></defs>   <oryx:magnets>    <oryx:magnet oryx:cx=\"2\" oryx:cy=\"25\" oryx:anchors=\"left\" oryx:default=\"yes\"/>   </oryx:magnets>   <g pointer-events=\"all\" oryx:minimumSize=\"10 20\" oryx:maximumSize=\"\" >   <rect   id=\"textannotationrect\"  oryx:resize=\"vertical horizontal\"  x=\"1\"   y=\"1\"  width=\"100\"  height=\"50\"  stroke=\"none\"  fill=\"none\" />   <path   d=\"M20,1 L1,1 L1,50 L20,50\"   oryx:anchors=\"top bottom left\"   fill=\"none\"   stroke-width=\"1\"     stroke=\"#4d4d4d\"     stroke-linecap=\"round\" stroke-linejoin=\"round\"/>          <text    font-size=\"12\"    id=\"text\"    x=\"5\"    y=\"25\"    oryx:align=\"middle left\"   oryx:fittoelem=\"textannotationrect\"   oryx:anchors=\"left\"   stroke=\"#4d4d4d\"         fill=\"#4d4d4d\">         Text Annotation  </text>   </g> </svg> ",
+            "icon":"node.textannotation.png",
+            "roles": [
+                "diagramcontent",
+                "from_artifact",
+                "to_artifact"
+            ],
+            "properties": [
+                {
+                    "id":"text",
+                    "type":"String",
+                    "title":"Text",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "refToView":"text",
+                    "length":"",
+                    "wrapLines":true
+                }
+            ]
+        },
+        {
+            "type": "edge",
+            "id":"UndirectedAssociation",
+            "title":"Undirected Association",
+            "title_de":"Ungerichtete Assoziation",
+            "description":"Attaches a text annotation with a model element.",
+            "description_de":"Verbindet eine Text-Annotation mit einem Model Element.",
+            "groups":[],
+            "groups_de":[],
+            "view":"<svg  xmlns=\"http://www.w3.org/2000/svg\"  xmlns:oryx=\"http://www.b3mn.org/oryx\"  version=\"1.0\"  oryx:edge=\"edge\" >  <g id=\"edge\">      <path d=\"M10 50 L110 50\" stroke=\"#4d4d4d\" fill=\"none\" stroke-width=\"1\" stroke-dasharray=\"3, 4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />  </g> </svg> ",
+            "icon":"edge.undirectedassociation.png",
+            "roles": [
+                "diagramcontent"
+            ],
+            "properties": [
+            ]
+        },
+	],	
+	"rules": {
+		"connectionRules": [
+			{
+				"role":"BidirectionalConnection",
+				"connects": [
+					{
+						"from":"from_active",
+						"to":["to_channel"]
+					},
+					{
+						"from":"from_channel",
+						"to":["to_active"]
+					}
+				]
+			},	
+			{
+				"role":"WriteAccess",
+				"connects": [
+					{
+						"from":"from_active",
+						"to":["to_passive"]
+					},
+					{
+						"from":"from_passive",
+						"to":["to_active"]
+					}
+				]
+			},	
+			{
+				"role":"ReadAccess",
+				"connects": [
+					{
+						"from":"from_active",
+						"to":["to_passive"]
+					},
+					{
+						"from":"from_passive",
+						"to":["to_active"]
+					}
+				]
+			},	
+			{
+				"role":"ModifyingAccess",
+				"connects": [
+					{
+						"from":"from_active",
+						"to":["to_storage"]
+					},
+					{
+						"from":"from_storage",
+						"to":["to_active"]
+					}
+				]
+			},
+            {
+                "role":"UndirectedAssociation",
+                "connects": [
+                    {
+                        "from":"diagramcontent",
+                        "to":["TextAnnotation"]
+                    },
+                    {
+                        "from":"TextAnnotation",
+                        "to":["diagramcontent"]
+                    }
+                ]
+            },
+		],
+		"containmentRules": [
+			{
+				"role":"Diagram",
+				"contains": [
+					"diagramcontent"
+				]
+			},
+			{
+				"role":"Storage",
+				"contains": [
+					"storagecontent"
+				]
+			},
+			{
+				"role":"Agent",
+				"contains": [
+					"agentcontent"
+				]
+			},
+			{
+				"role":"StructureVariance",
+				"contains": [
+					"agentcontent"
+				]
+			}
+		]
+	}
+}
