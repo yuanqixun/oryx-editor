@@ -792,14 +792,14 @@
 		<servlet-name>VisioImporter</servlet-name>
 		<url-pattern>/visioimport</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 
 	<jsp-config>
 		<taglib>
 			<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
 			<taglib-location>/WEB-INF/c.tld</taglib-location>
 		</taglib>
 	</jsp-config>
-
+	-->
 	<!-- the number within the session-timout element must be expressed in
 		minutes. it is now 24 hours. -->
 	<session-config>
