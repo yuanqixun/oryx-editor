@@ -1,3 +1,10 @@
 This project is base on oryx-editor project.
 I just change it to base on maven project structure.
 And it can run on Tomcat7.0.14(Jboss havn't test).
+
+The database's initalize sql is :
+psql -U postgres -d poem -f /var/samba/share/db_schema.sql
+
+The first url is :
+
+http://localhost:8080/backend/poem/repository
