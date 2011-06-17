@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.b3mn.poem.business.Model;
 import org.b3mn.poem.business.User;
 import org.b3mn.poem.handler.HandlerBase;
@@ -66,6 +67,8 @@ public class Dispatcher extends HttpServlet {
 //	private Properties props;
 //	
 //	private long authenticationTokenExpirationTime = 30;
+	
+	private Logger log = Logger.getLogger(getClass());
 	
 	public static String getPublicUser() {
 		return publicUser;
@@ -332,6 +335,12 @@ public class Dispatcher extends HttpServlet {
 			String openId =  (String) request.getSession().getAttribute("openid"); 
 			
 			User user = (User) request.getAttribute("user");
+			String lang = user.getLanguageCode(request);
+			String country = user.getCountryCode(request);
+			log.info(lang+"-"+country);
+			request.getSession().setAttribute("languagecode", lang);
+			request.getSession().setAttribute("countrycode", country);
+			
 			
 			String requestMethod = request.getMethod();
 			

@@ -59,7 +59,6 @@ public class Identity {
 			createSQLQuery("select {identity.*} FROM {identity} where uri=?");
 		query.addEntity("identity", Identity.class);
 		query.setString(0, uri);
-		System.out.println(query.getQueryString());
 		identity = (Identity) query.uniqueResult();
 		Persistance.commit();
 		return identity;

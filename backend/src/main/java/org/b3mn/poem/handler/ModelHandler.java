@@ -19,12 +19,15 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
-****************************************/
+ ****************************************/
 
 package org.b3mn.poem.handler;
 
-import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,75 +35,121 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.b3mn.poem.Identity;
 import org.b3mn.poem.Representation;
 import org.b3mn.poem.util.AccessRight;
 import org.b3mn.poem.util.HandlerWithModelContext;
 import org.b3mn.poem.util.RestrictAccess;
 
-@HandlerWithModelContext(uri="/self", filterBrowser=true)
-public class ModelHandler extends  HandlerBase {
-	Properties props=null;
+//import org.jboss.logging.Logger;
+
+@HandlerWithModelContext(uri = "/self", filterBrowser = true)
+public class ModelHandler extends HandlerBase {
+	Properties props = null;
+	Logger log = Logger.getLogger(ModelHandler.class);
+
 	@Override
 	public void init() {
-		//Load properties
-		FileInputStream in;
-		
-		//initialize properties from backend.properties
+		// Load properties
+		InputStream in;
+
+		// initialize properties from backend.properties
 		try {
-			
-			in = new FileInputStream(this.getBackendRootDirectory() + "/WEB-INF/backend.properties");
+
+			// in = new FileInputStream(this.getBackendRootDirectory() +
+			// "/WEB-INF/backend.properties");
+			in = getClass().getResourceAsStream("/backend.properties");
 			props = new Properties();
 			props.load(in);
 			in.close();
-		}catch (Exception e) {
-			props=new Properties();
+		} catch (Exception e) {
+			props = new Properties();
 		}
 	}
+
 	@Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response, Identity subject, Identity object) throws IOException {
-		String profileName=null;
+	public void doGet(HttpServletRequest request, HttpServletResponse response,
+			Identity subject, Identity object) throws IOException {
+		String profileName = null;
 		try {
 			Representation representation = object.read();
-			String stencilSet=representation.getType();
+			String stencilSet = representation.getType();
 			Pattern p = Pattern.compile("/([^/]+)#");
 			Matcher matcher = p.matcher(stencilSet);
-			if(matcher.find()){
-				profileName=props.getProperty("org.b3mn.poem.handler.ModelHandler.profileFor."+matcher.group(1));
+			if (matcher.find()) {
+				profileName = props
+						.getProperty("org.b3mn.poem.handler.ModelHandler.profileFor."
+								+ matcher.group(1));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
-		if(profileName==null)
-			profileName="default";
-		
-	    String queryString = request.getQueryString();   // d=789
-	    if (queryString != null) {
-			response.sendRedirect("/oryx/editor;"+profileName+"?"+queryString+"#"+object.getUri());
+		log.info("The request profile is :" + profileName);
+		if (profileName == null)
+			profileName = "default";
 
-	        }
-	    else{
-			response.sendRedirect("/oryx/editor;"+profileName+"#"+object.getUri());
+		String queryString = request.getQueryString(); // d=789
+		if (queryString != null) {
+			response.sendRedirect("/oryx/editor;" + profileName + "?"
+					+ queryString + "#" + object.getUri());
 
-	    }
+		} else {
+			response.sendRedirect("/oryx/editor;" + profileName + "#"
+					+ object.getUri());
+
+		}
 	}
-	
+
 	@Override
 	@RestrictAccess(AccessRight.WRITE)
-    public void doPost(HttpServletRequest request, HttpServletResponse response, Identity subject, Identity object) throws IOException {
+	public void doPost(HttpServletRequest request,
+			HttpServletResponse response, Identity subject, Identity object)
+			throws IOException {
 		// TODO: add some error handling
-		Representation.update(object.getId(), null, null, request.getParameter("data"), request.getParameter("svg"));
+		String repo = "d:/oryx/repo/";
+		String uri = object.getUri();
+		String data = request.getParameter("data");
+		String svg = request.getParameter("svg");
+		Representation.update(object.getId(), null, null, data, svg);
+			
+		File dir = new File(repo + uri);
+		if (!dir.exists())
+			dir.mkdirs();
+		
+		String dataFilePath = repo + uri + "/data.json";
+		String svgFilePath = repo + uri + "/svg.xml";
+		write2File(dataFilePath,data);
+		write2File(svgFilePath,svg);
+		
 		response.setStatus(200);
 	}
 
+	private void write2File(String filePath, String data) {
+		try {
+			// 创建PrintWriter对象，用于写入数据到文件中
+			PrintWriter pw = new PrintWriter(new FileOutputStream(filePath));
+			// 用文本格式打印整数Writestr
+			pw.println(data);
+			// 清除PrintWriter对象
+			pw.close();
+		} catch (IOException e) {
+			// 错误处理
+			log.error("写入文件错误 " + e.getMessage());
+		}
+	}
+
 	@Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response, Identity subject, Identity object) throws IOException {
+	public void doPut(HttpServletRequest request, HttpServletResponse response,
+			Identity subject, Identity object) throws IOException {
 		response.setStatus(200);
 	}
 
 	@Override
 	@RestrictAccess(AccessRight.WRITE)
-    public void doDelete(HttpServletRequest request, HttpServletResponse response, Identity subject, Identity object) throws IOException {
+	public void doDelete(HttpServletRequest request,
+			HttpServletResponse response, Identity subject, Identity object)
+			throws IOException {
 		object.delete();
 		response.setStatus(200);
 	}

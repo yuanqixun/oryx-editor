@@ -23,8 +23,8 @@
 
 package org.b3mn.poem.handler;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,12 +43,14 @@ public class NewModelHandler extends HandlerBase {
 	@Override
 	public void init() {
 		//Load properties
-		FileInputStream in;
+//		FileInputStream in = null;
+		InputStream in = null;
 		
 		//initialize properties from backend.properties
 		try {
 			
-			in = new FileInputStream(this.getBackendRootDirectory() + "/WEB-INF/backend.properties");
+//			in = new FileInputStream(this.getBackendRootDirectory() + "/WEB-INF/backend.properties");
+			in = getClass().getResourceAsStream("/backend.properties");
 			props = new Properties();
 			props.load(in);
 			in.close();
@@ -97,7 +99,8 @@ public class NewModelHandler extends HandlerBase {
 			Pattern p = Pattern.compile("/([^/]+).json");
 			Matcher matcher = p.matcher(stencilset);
 			if(matcher.find()){
-				profileName=props.getProperty("org.b3mn.poem.handler.ModelHandler.profileFor."+matcher.group(1));
+				String key = "org.b3mn.poem.handler.ModelHandler.profileFor."+matcher.group(1);
+				profileName=props.getProperty(key);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

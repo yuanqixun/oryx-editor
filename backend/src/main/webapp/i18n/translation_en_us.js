@@ -18,6 +18,7 @@ Repository.I18N.en_us = "English";
 Repository.I18N.de = "Deutsch";
 Repository.I18N.ru = "Русский";
 Repository.I18N.es = "español";
+Repository.I18N.zh_cn = "简体中文";
 
 // Repository strings
 

@@ -25,10 +25,12 @@ package org.b3mn.poem;
 
 import java.io.Serializable;
 
+//@Entity
 public class Access implements Serializable {
 	
 	private static final long serialVersionUID = 2216329517850461299L;
 
+//	@Id
     private long context_id;
     private String context_name;
     private long subject_id;

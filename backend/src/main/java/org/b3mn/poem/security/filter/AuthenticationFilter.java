@@ -1,7 +1,7 @@
 package org.b3mn.poem.security.filter;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -18,11 +18,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.b3mn.poem.Identity;
 import org.b3mn.poem.business.User;
 import org.b3mn.poem.handler.HandlerBase;
 import org.b3mn.poem.security.AuthenticationToken;
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.jasig.cas.client.util.AbstractCasFilter;
+import org.jasig.cas.client.validation.Assertion;
 
 public class AuthenticationFilter implements Filter {
 
@@ -38,10 +42,9 @@ public class AuthenticationFilter implements Filter {
 		servletContext = config.getServletContext();
 
 		// load backend.properties
-		FileInputStream in;
+		InputStream in;
 		try {
-			in = new FileInputStream(servletContext
-					.getRealPath("/WEB-INF/backend.properties"));
+			in = getClass().getResourceAsStream("/backend.properties");
 			props = new Properties();
 			props.load(in);
 			in.close();
@@ -78,8 +81,16 @@ public class AuthenticationFilter implements Filter {
 			// You can use any name without spaces as openId
 			// For example:
 //			String openId = null;//"public";
+//			HttpSession session = request.getSession();
+//			final Assertion assertion = (Assertion) (session == null ? req
+//					.getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION) : session
+//					.getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION));
+//			AttributePrincipal principal = assertion.getPrincipal();
+			
 			String openId = 
 				(String) request.getSession().getAttribute("openid"); // Retrieve open id from session
+//			String openId = principal.getName();
+			request.getSession().setAttribute("openid",openId);
 			
 			User user = null;
 

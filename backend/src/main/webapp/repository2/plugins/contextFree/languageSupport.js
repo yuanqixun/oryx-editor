@@ -33,6 +33,7 @@ if(!Repository.Plugins) Repository.Plugins = {};
 Repository.Plugins.LanguageSupport = {
 	
 	IMAGE_URLS: {
+		zh_cn: '/backend/images/flags/zh_cn.png',
 		de: '/backend/images/flags/de.png',
 		en_us: '/backend/images/flags/us.png',
 		en: '/backend/images/flags/us.png',

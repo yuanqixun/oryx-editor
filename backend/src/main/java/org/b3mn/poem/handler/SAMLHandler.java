@@ -76,14 +76,15 @@ public class SAMLHandler extends HandlerBase {
 	@Override
 	public void init() {
 		//Load properties
-		FileInputStream in;
+		InputStream in;
 		
 		//initialize properties from backend.properties
 		try {
 			trustedIssuers = new ArrayList<String>();
 			certificates = new ArrayList<String>();
 			
-			in = new FileInputStream(this.getBackendRootDirectory() + "/WEB-INF/backend.properties");
+//			in = new FileInputStream(this.getBackendRootDirectory() + "/WEB-INF/backend.properties");
+			in = getClass().getResourceAsStream("/backend.properties");
 			Properties props = new Properties();
 			props.load(in);
 			in.close();
