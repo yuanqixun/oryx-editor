@@ -8,3 +8,6 @@ psql -U postgres -d poem -f /var/samba/share/db_schema.sql
 The first url is :
 
 http://localhost:8080/backend/poem/repository
+
+安装postgres数据库，然后导入./data/db_schema.sql数据，并执行hotfix-01.sql脚本，
+避免关键字冲突
